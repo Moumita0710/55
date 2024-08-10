@@ -1,0 +1,68 @@
+package August;
+class Orders{
+   String orderId;
+   int orderNumber;
+   String location;
+   double amount;
+   double gst;
+   double totalAmount;
+   Orders( String orderId,int orderNumber, String location, double amount, double gst){
+       this.orderId=orderId;
+       this.orderNumber=orderNumber;
+       this.location=location;
+       this.amount=amount;
+       this.gst=gst;
+   }
+   double calculateTotalAmount(){
+       totalAmount=amount+gst;
+       return calculateTotalAmount();
+   }
+}
+class Client extends Orders{
+    String clientName;
+    String clientCity;
+    double clientCreditLimit;
+    double totalCredit;
+    Client( String orderId,int orderNumber, String location, double amount, double gst,
+            String clientName, String clientCity, double clientCreditLimit){
+        super(orderId,orderNumber,location, amount,gst);
+        this.clientName=clientName;
+        this.clientCity=clientCity;
+        this.clientCreditLimit=clientCreditLimit;
+    }
+    double updateCredit(double newCredit) {
+        totalCredit += newCredit;
+        return totalCredit;
+    }
+    double checkCreditLimit(){
+
+        if(totalCredit>clientCreditLimit){
+            System.out.println("Credit Limit Exceeded:Yes");
+        }
+        else{
+            System.out.println("Credit Limit Exceeded: No");
+        }
+        return checkCreditLimit();
+    }
+}
+class CreditLimit extends Client{
+    int totalClient;
+    CreditLimit(String orderId,int orderNumber, String location, double amount, double gst,
+                String clientName, String clientCity, double clientCreditLimit, int totalClient){
+        super(orderId,orderNumber,location, amount,gst,clientName,clientCity,clientCreditLimit);
+    }
+    void displayClientDetails(){
+        String orderId1="A1234";
+        int orderNumber1=101;
+        String location1="Bhayandar";
+        double amount=54500;
+        double gst=amount*2/100;
+        String clientName="Moumita";
+        String clientCity="Mumbai";
+        double clientCreditLimit=80000;
+        int totalClient=1;
+
+    }
+}
+public class MainClass {
+}
