@@ -6,7 +6,7 @@ class Orders{
    double amount;
    double gst;
    double totalAmount;
-   Orders( String orderId,int orderNumber, String location, double amount, double gst){
+   Orders(String orderId,int orderNumber, String location, double amount, double gst){
        this.orderId=orderId;
        this.orderNumber=orderNumber;
        this.location=location;
@@ -15,7 +15,8 @@ class Orders{
    }
    double calculateTotalAmount(){
        totalAmount=amount+gst;
-       return calculateTotalAmount();
+       System.out.println("Total amount: "+totalAmount);
+       return totalAmount;
    }
 }
 class Client extends Orders{
@@ -24,45 +25,56 @@ class Client extends Orders{
     double clientCreditLimit;
     double totalCredit;
     Client( String orderId,int orderNumber, String location, double amount, double gst,
-            String clientName, String clientCity, double clientCreditLimit){
+            String clientName, String clientCity, double clientCreditLimit,double totalCredit){
         super(orderId,orderNumber,location, amount,gst);
         this.clientName=clientName;
         this.clientCity=clientCity;
         this.clientCreditLimit=clientCreditLimit;
+        this.totalCredit=totalCredit;
     }
     double updateCredit(double newCredit) {
-        totalCredit += newCredit;
+        totalCredit=totalCredit+newCredit;
         return totalCredit;
     }
-    double checkCreditLimit(){
+    void checkCreditLimit(){
 
-        if(totalCredit>clientCreditLimit){
+        if(updateCredit(2000)>clientCreditLimit){
             System.out.println("Credit Limit Exceeded:Yes");
         }
         else{
             System.out.println("Credit Limit Exceeded: No");
         }
-        return checkCreditLimit();
+
     }
 }
 class CreditLimit extends Client{
     int totalClient;
     CreditLimit(String orderId,int orderNumber, String location, double amount, double gst,
-                String clientName, String clientCity, double clientCreditLimit, int totalClient){
-        super(orderId,orderNumber,location, amount,gst,clientName,clientCity,clientCreditLimit);
+                String clientName, String clientCity, double clientCreditLimit, int totalClient,double totalCredit){
+        super(orderId,orderNumber,location, amount,gst,clientName,clientCity,clientCreditLimit,totalCredit);
     }
     void displayClientDetails(){
-        String orderId1="A1234";
-        int orderNumber1=101;
-        String location1="Bhayandar";
-        double amount=54500;
-        double gst=amount*2/100;
-        String clientName="Moumita";
-        String clientCity="Mumbai";
-        double clientCreditLimit=80000;
-        int totalClient=1;
+        System.out.println("Order Id="+orderId);
+        System.out.println("Order Number="+orderNumber);
+        System.out.println("Location="+location);
+        System.out.println("Amount="+amount);
+        System.out.println("GST="+gst);
+        System.out.println("Client Name="+clientName);
+        System.out.println("Client City="+clientCity);
+        System.out.println("Client credit limit="+clientCreditLimit);
 
+        System.out.println("Total Client="+totalClient);
     }
 }
-public class MainClass {
+
+public class Billing {
+    public static void main(String[] args) {
+        CreditLimit cl = new CreditLimit("A10",101,"Bhayandar",50000,
+                3*50000/100,"Moumita","Mumbai",6000,1,5000);
+        cl.displayClientDetails();
+        cl.calculateTotalAmount();
+        cl.checkCreditLimit();
+        System.out.println("Total Credit="+cl.updateCredit(2000));
+
+    }
 }
