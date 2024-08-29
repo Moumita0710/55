@@ -1,0 +1,87 @@
+package Aug_2024;
+class Order{
+    String orderId[];
+    int orderNumber[];
+    String location[];
+    double amount[];
+    double gst[];
+    double totalAmount[];
+    Order(String orderId[],int orderNumber[], String location[], double amount[], double gst[]){
+        this.orderId=orderId;
+        this.orderNumber=orderNumber;
+        this.location=location;
+        this.amount=amount;
+        this.gst=gst;
+    }
+    void calculateTotalAmount(){
+        for(int i=0;i< orderId.length;i++){
+            totalAmount[i]=amount[i]+gst[i];
+            System.out.println("Total amount: "+totalAmount);
+
+        }
+
+    }
+}
+class Client extends Order{
+    String clientName[];
+    String clientCity[];
+    double clientCreditLimit[];
+    double totalCredit[];
+    double newCredit[];
+    Client( String orderId[],int orderNumber[], String location[], double amount[], double gst[],
+            String clientName[], String clientCity[], double clientCreditLimit[],double totalCredit[]){
+        super(orderId,orderNumber,location, amount,gst);
+        this.clientName=clientName;
+        this.clientCity=clientCity;
+        this.clientCreditLimit=clientCreditLimit;
+        this.totalCredit=totalCredit;
+    }
+    double updateCredit() {
+        for(int i=0;i<orderId.length;i++){
+            totalCredit[i]=totalCredit[i]+ this.newCredit[i];
+        }
+        return updateCredit();
+
+    }
+    void checkCreditLimit(){
+
+        if(updateCredit(newCredit[])>clientCreditLimit){
+            System.out.println("Credit Limit Exceeded:Yes");
+        }
+        else{
+            System.out.println("Credit Limit Exceeded: No");
+        }
+
+    }
+}
+class CreditLimit extends Client{
+    int totalClient;
+    CreditLimit(String orderId[],int orderNumber[], String location[], double amount[], double gst[],
+                String clientName[], String clientCity[], double clientCreditLimit[], int totalClient[],double totalCredit[]){
+        super(orderId,orderNumber,location, amount,gst,clientName,clientCity,clientCreditLimit,totalCredit);
+    }
+    void displayClientDetails(){
+        System.out.println("Order Id="+orderId);
+        System.out.println("Order Number="+orderNumber);
+        System.out.println("Location="+location);
+        System.out.println("Amount="+amount);
+        System.out.println("GST="+gst);
+        System.out.println("Client Name="+clientName);
+        System.out.println("Client City="+clientCity);
+        System.out.println("Client credit limit="+clientCreditLimit);
+
+        System.out.println("Total Client="+totalClient);
+    }
+}
+
+public class Billing {
+    public static void main(String[] args) {
+        CreditLimit cl = new CreditLimit("A10",101,"Bhayandar",50000,
+                3*50000/100,"Moumita","Mumbai",6000,1,5000);
+        cl.displayClientDetails();
+        cl.calculateTotalAmount();
+        cl.checkCreditLimit();
+        System.out.println("Total Credit="+cl.updateCredit(2000));
+
+    }
+}
