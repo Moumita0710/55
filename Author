@@ -1,0 +1,46 @@
+package Advance_Java;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Author{
+    String Name, City;
+    Author(String Name, String City){
+        this.Name=Name;
+        this.City=City;
+    }
+}
+class Book extends Author{
+    int id;
+    String Book_Name;
+    Book(String Name, String City, int id, String Book_Name){
+        super(Name, City);
+        this.Name=Name;
+        this.City=City;
+        this.id=id;
+        this.Book_Name=Book_Name;
+    }
+    }
+public class MyMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String book_name, name, city, exit;
+        int id;
+        ArrayList<Book> b = new ArrayList<Book>();
+        do{
+        System.out.println("Enter Book name:");
+        book_name = sc.nextLine();
+        System.out.println("Enter author name of" + book_name + ":");
+         name = sc.nextLine();
+        System.out.println("Enter id of"+name+":");
+        id=sc.nextInt();
+        System.out.println("Enter city of"+name+":");
+        city=sc.next();
+        Book book=new Book(name,city,id,book_name);
+         
+        System.out.println("Do you want to continue:");
+        exit=sc.next();
+    }
+        while (exit.equalsIgnoreCase("yes"));
+        }
+}
