@@ -1,1 +1,29 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Add New Employee</h1>
+    <form action="http://localhost:8080/MyJSP/AddEmployee" method="post">
+        ID:
+        <input type="text" name="id"><br>
+        Name:
+        <input type="text" name="name" required><br>
+       Password:
+        <input type="password" name="pass"><br>
+        Email:
+        <input type="email" name="email" required><br>
+        Country:
+        <select name="country">
+            <option value="India">India</option>
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+        </select><br><br>
+        <input type="submit" value="Save Employee"><br>
+        <a href="http://localhost:8080/MyJSP/Display_Employee">View Employee</a>
+        
+    </form>
+</body>
+</html>
