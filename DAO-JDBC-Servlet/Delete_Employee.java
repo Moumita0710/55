@@ -1,10 +1,8 @@
 package myPack;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,21 +18,30 @@ public class Delete_Employee extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		DAOEmp dao;
+		int status=0;
+		PrintWriter out=response.getWriter();
 		String id=request.getParameter("id");
+		dao=new Emp_Dao_Imp();
+		
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			System.out.println("after get");
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/employee","root","");
-			Statement st=con.createStatement();
-			 PreparedStatement pstmt = con.prepareStatement("DELETE FROM empinfo WHERE id = ?");
-	            pstmt.setString(1, id);
-	            pstmt.executeUpdate();
-
-	            response.sendRedirect("Display_Emp");
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	}
+			status=dao.Emp_Delete(id);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 if (status>0){
+	            out.println("Record deleted.."+id);
+	            response.sendRedirect("Display_Employee");
+		 }
+	    else {
+        out.println("deletion failed."+id);
+    }
+	        } 
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

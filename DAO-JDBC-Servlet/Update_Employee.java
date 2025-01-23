@@ -2,10 +2,6 @@ package myPack;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,8 +14,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/Update_Employee")
 public class Update_Employee extends HttpServlet {
-	
+	private static final long serialVersionUID = 1L;
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		DAOEmp dao;
+		int status=0;
 		PrintWriter out=response.getWriter();
 		String id=request.getParameter("id");
 		String name=request.getParameter("name");
@@ -27,32 +26,30 @@ public class Update_Employee extends HttpServlet {
 		String email=request.getParameter("email");
 		String country=request.getParameter("country");
 		
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			System.out.println("after get");
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/employee","root","");
-			Statement st=con.createStatement();
-		PreparedStatement pstmt = con.prepareStatement("UPDATE empinfo SET name = ?, Password = ?, email = ?, country = ? WHERE id = ?");
-        pstmt.setString(1, name);
-        pstmt.setString(2, pass);
-        pstmt.setString(3, email);
-        pstmt.setString(4, country);
-        pstmt.setString(5, id);
-        int status=pstmt.executeUpdate();
+		EmpPojo em=new EmpPojo();
+        em.setId(id);
+        em.setName(name);
+        em.setPassword(pass);
+        em.setEmail(email);
+        em.setCountry(country);
+       dao=new Emp_Dao_Imp();
+       try {
+			status=dao.Emp_Update(em);
+		}catch (Exception e) {
+            e.printStackTrace();
+            out.println("<h3>Error: " + e.getMessage() + "</h3>");
+		}
 		if(status>0) {
-			out.println("Employee added");
+			System.out.println("Employee updated");
 		}
 		else {
-			out.println("Failed to add employee");
+			System.out.println("Failed to update employee");
 
 		}
 
-        response.sendRedirect("/ServletProject/Display_Emp");
-    } catch (Exception e) {
-        e.printStackTrace();
-        out.println("<h3>Error: " + e.getMessage() + "</h3>");
+        response.sendRedirect("http://localhost:8080/MyJSP/Display_Employee");
     }
-	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
