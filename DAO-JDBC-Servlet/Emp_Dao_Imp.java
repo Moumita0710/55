@@ -36,13 +36,18 @@ public class Emp_Dao_Imp implements DAOEmp {
 	public int Emp_Update(EmpPojo employee) throws SQLException, ClassNotFoundException {
 		int status=0;
 		Connection con=DBconnection.getconnection();
-		PreparedStatement ps=con.prepareStatement("update emp set id=?,name=?,passowrd=?,email=?,country=? where id=?");
-		ps.setString(1, employee.getId());
-		ps.setString(2, employee.getName());
-		ps.setString(3, employee.getPassword());
-		ps.setString(4, employee.getEmail());
-		ps.setString(5, employee.getCountry());
-		ps.setString(1, employee.getId());
+		PreparedStatement ps=con.prepareStatement("update emp set name=?,passowrd=?,email=?,country=? where id=?");
+		// ps.setString(1, employee.getId());
+		// ps.setString(2, employee.getName());
+		// ps.setString(3, employee.getPassword());
+		// ps.setString(4, employee.getEmail());
+		// ps.setString(5, employee.getCountry());
+		// ps.setString(1, employee.getId());
+		ps.setString(1, employee.getName());
+		ps.setString(2, employee.getPassword());
+		ps.setString(3, employee.getEmail());
+		ps.setString(4, employee.getCountry());
+	        ps.setString(5, employee.getId());
 		System.out.println(ps);
 		status=ps.executeUpdate();
 		return status;
